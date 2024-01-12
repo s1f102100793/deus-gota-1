@@ -1,9 +1,5 @@
 [
   {
-    "source": "client/src/atoms/user.ts",
-    "content": "import type { User } from '$/api/@types';\nimport { atom } from 'jotai';\n\nexport const userAtom = atom<User | null>(null);\n"
-  },
-  {
     "source": "client/src/components/ElapsedTime/ElapsedTime.module.css",
     "content": ".date {\n  font-size: 16px;\n  color: #777;\n}\n"
   },

@@ -1,8 +1,8 @@
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
-import { BasicHeader } from 'src/pages/@components/BasicHeader/BasicHeader';
-import { apiClient } from 'src/utils/apiClient';
-import { userAtom } from '../atoms/user';
+import { BasicHeader } from '@/components/BasicHeader/BasicHeader';
+import { apiClient } from '@/utils/apiClient';
+import { userAtom } from '@/atoms/user';
 import styles from './index.module.css';
 
 const Home = () => {
