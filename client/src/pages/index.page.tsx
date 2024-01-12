@@ -5,9 +5,16 @@ import { apiClient } from '@/utils/apiClient';
 import { userAtom } from '@/atoms/user';
 import styles from './index.module.css';
 
+// Raceの型定義を追加
+export type Race = {
+  id: string;
+  name: string;
+  startTime: string;
+};
+
 const Home = () => {
   const [user] = useAtom(userAtom);
-  const [races, setRaces] = useState([]);
+  const [races, setRaces] = useState<Race[]>([]);
 
   const fetchRaces = async () => {
     const races = await apiClient.public.races.$get().catch(() => null);
