@@ -6,11 +6,6 @@ interface Player {
   score: number;
 }
 
-interface Ball {
-  id: number;
-  value: number;
-}
-
 const GamePage = () => {
   const [players, setPlayers] = useState<Player[]>([
     { id: 1, name: 'Player 1', score: 0 },
