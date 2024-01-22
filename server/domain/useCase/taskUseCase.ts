@@ -1,8 +1,8 @@
 import type { User } from '$/api/@types';
 import type { TaskModel } from '$/api/@types/models';
-import { taskModel } from '$/service/model/taskModel';
-import { s3Repo } from '$/service/repository/s3Repo';
-import { taskRepo } from '$/service/repository/taskRepo';
+import { taskModel } from '$/domain/model/taskModel';
+import { s3Repo } from '$/domain/repository/s3Repo';
+import { taskRepo } from '$/domain/repository/taskRepo';
 import { transaction } from '$/service/prismaClient';
 import type { MultipartFile } from '@fastify/multipart';
 
