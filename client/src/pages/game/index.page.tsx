@@ -16,11 +16,6 @@ const GamePage = () => {
     { id: 1, name: 'Player 1', score: 0 },
     { id: 2, name: 'Player 2', score: 0 }
   ]);
-  const [balls, setBalls] = useState<Ball[]>([
-    { id: 1, value: 3 },
-    { id: 2, value: 5 },
-    { id: 3, value: 7 }
-  ]);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
 
   const throwBall = (ballValue: number) => {
@@ -48,7 +43,11 @@ const GamePage = () => {
         ))}
       </div>
       <div>
-        {balls.map(ball => (
+        {[
+          { id: 1, value: 3 },
+          { id: 2, value: 5 },
+          { id: 3, value: 7 }
+        ].map(ball => (
           <button key={ball.id} onClick={() => throwBall(ball.value)}>Throw Ball {ball.value}</button>
         ))}
       </div>
