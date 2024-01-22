@@ -11,66 +11,13 @@ model User {
   id    String @id @default(uuid())
   email String @unique
   name  String
-  bets  Bet[]
+  tasks Task[]
 }
 
-model Race {
-  id          Int          @id @default(autoincrement())
-  name        String
-  startTime   DateTime
-  raceEntries RaceEntry[]
-  raceResults RaceResult[]
-  Bet         Bet[]
-}
-
-model Horse {
-  id          Int          @id @default(autoincrement())
-  name        String
-  breed       String
-  birthYear   Int
-  raceEntries RaceEntry[]
-  RaceResult  RaceResult[]
-}
-
-model Jockey {
-  id          Int         @id @default(autoincrement())
-  name        String
-  birthYear   Int
-  raceEntries RaceEntry[]
-}
-
-model RaceEntry {
-  id       Int    @id @default(autoincrement())
-  raceId   Int
-  horseId  Int
-  jockeyId Int
-  race     Race   @relation(fields: [raceId], references: [id])
-  horse    Horse  @relation(fields: [horseId], references: [id])
-  jockey   Jockey @relation(fields: [jockeyId], references: [id])
-}
-
-model RaceResult {
-  id       Int   @id @default(autoincrement())
-  raceId   Int
-  horseId  Int
-  position Int
-  race     Race  @relation(fields: [raceId], references: [id])
-  horse    Horse @relation(fields: [horseId], references: [id])
-}
-
-model Bet {
-  id        Int      @id @default(autoincrement())
-  userId    String
-  raceId    Int
-  amount    Float
-  betType   BetType
-  createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
-  race      Race     @relation(fields: [raceId], references: [id])
-}
-
-enum BetType {
-  WIN
-  PLACE
-  SHOW
+model Task {
+  id      Int    @id @default(autoincrement())
+  title   String
+  content String
+  userId  String
+  user    User   @relation(fields: [userId], references: [id])
 }
