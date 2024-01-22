@@ -1,10 +1,18 @@
 [
   {
-    "source": "server/api/@types/index.ts",
-    "content": "export type User = {\n  id: string;\n  email: string;\n  name: string;\n};\n"
+    "source": "server/api/private/tasks/controller.ts",
+    "content": "import { taskUseCase } from '$/domain/useCase/taskUseCase';\nimport { z } from 'zod';\nimport { defineController, multipartFileValidator } from './$relay';\n\nexport default defineController(() => ({\n  post: {\n    validators: {\n      body: z.object({ label: z.string(), image: multipartFileValidator().optional() }),\n    },\n    handler: async ({ user, body }) => ({\n      status: 201,\n      body: await taskUseCase.create(user, body.label, body.image),\n    }),\n  },\n  patch: {\n    validators: {\n      body: z.object({\n        taskId: z.string(),\n        done: z.boolean(),\n        label: z.string(),\n      }),\n    },\n    handler: async ({ user, body }) => {\n      const task = await taskUseCase.update(user, body.taskId, body.done, body.label);\n\n      return { status: 204, body: task };\n    },\n  },\n  delete: async ({ user, body }) => {\n    await taskUseCase.delete(user, body.taskId);\n\n    return { status: 204 };\n  },\n}));\n"
   },
   {
-    "source": "server/api/@types/models.ts",
-    "content": "export type TaskModel = {\n  id: string;\n  label: string;\n  done: boolean;\n  createdTime: number;\n  image: { url: string; s3Key: string } | undefined;\n  author: { userId: string; name: string };\n};\n"
+    "source": "server/api/private/tasks/index.ts",
+    "content": "import type { TaskModel } from '$/api/@types/models';\nimport type { DefineMethods } from 'aspida';\n\nexport type Methods = DefineMethods<{\n  post: {\n    reqFormat: FormData;\n    reqBody: {\n      label: string;\n      image?: Blob;\n    };\n    resBody: TaskModel;\n  };\n\n  patch: {\n    reqBody: {\n      taskId: string;\n      done: boolean;\n      label: string;\n    };\n    status: 204;\n    resBody: TaskModel;\n  };\n\n  delete: {\n    reqBody: {\n      taskId: string;\n    };\n    status: 204;\n  };\n}>;\n"
+  },
+  {
+    "source": "server/api/public/tasks/controller.ts",
+    "content": "import { taskRepo } from '$/domain/repository/taskRepo';\nimport { prismaClient } from '$/service/prismaClient';\nimport { defineController } from './$relay';\n\nexport default defineController(() => ({\n  get: async ({ query }) => ({\n    status: 200,\n    body: await taskRepo.findAll(prismaClient, query?.limit),\n  }),\n}));\n"
+  },
+  {
+    "source": "server/api/public/tasks/index.ts",
+    "content": "import type { TaskModel } from '$/api/@types/models';\nimport type { DefineMethods } from 'aspida';\n\nexport type Methods = DefineMethods<{\n  get: {\n    query?: {\n      limit?: number;\n    };\n    resBody: TaskModel[];\n  };\n}>;\n"
   }
 ]

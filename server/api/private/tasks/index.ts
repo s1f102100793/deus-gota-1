@@ -1,30 +1,20 @@
-import type { TaskModel } from '$/api/@types/models';
-import type { DefineMethods } from 'aspida';
-
-export type Methods = DefineMethods<{
+/* eslint-disable */
+export type Methods = {
+  /** 認証されたユーザーが新しいタスクを作成します。 */
   post: {
-    reqFormat: FormData;
-    reqBody: {
-      label: string;
-      image?: Blob;
-    };
-    resBody: TaskModel;
-  };
+    status: 201
 
-  patch: {
-    reqBody: {
-      taskId: string;
-      done: boolean;
-      label: string;
-    };
-    status: 204;
-    resBody: TaskModel;
-  };
+    /** タスクが正常に作成されました。 */
+    resBody: {
+      id: number
+      title: string
+      content: string
+      userId: string
+    }
 
-  delete: {
     reqBody: {
-      taskId: string;
-    };
-    status: 204;
-  };
-}>;
+      title: string
+      content: string
+    }
+  }
+}
